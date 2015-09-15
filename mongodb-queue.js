@@ -75,7 +75,11 @@ Queue.prototype.add = function(payload, opts, callback) {
     }
     self.col.insert(msg, function(err, results) {
         if (err) return callback(err)
-        callback(null, '' + results[0]._id)
+        if (results.insertedIds) {
+            callback(null, '' + results.insertedIds[0])
+        } else {
+            callback(null, '' + results[0]._id)
+        }
     })
 }
 
