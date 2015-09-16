@@ -109,7 +109,8 @@ Queue.prototype.get = function(opts, callback) {
     self.col.findAndModify(query, sort, update, { new : true }, function(err, msg) {
         if (err) return callback(err)
         if (!msg) return callback()
-
+        if (msg.value)
+            msg = msg.value;
         // convert to an external representation
         msg = {
             // convert '_id' to an 'id' string
